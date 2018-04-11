@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+
+# TODO:
+# - direct stdin and stdout.
+# - add in indexing info in error message. Ex: tokenization error at line 1, char 12.
+# - symbols, escape, quote
+
+import argparse
+import sys, re
+from value import Value
+
+class Tokenizer:
+
+    def __init__(self, code):
+        self.code = code
+
+    def tokenize(self):
+
+        oparen = re.compile("\A\(")
+        cparen = re.compile("\A\)")
+        bool = re.compile("\A#(t|f)") #t #f
+        integer = re.compile("\A(\+|-)?\d+\.?")
+        double = re.compile("\A(\+|-)?\d*\.\d+")
+        # quote = re.compile("\A(quote|\')")
+        symbol = re.compile("\A[A-z]+")
+        string = re.compile("\A\".*\"")
+        comment = re.compile("\A;.*(\n|$)")
+
+        index = 0
+        tokens = []
+        while self.code:
+            if oparen.match(self.code):
+                # matched string
+                m_string = oparen.match(self.code).group()
+                value = Value("oparen", m_string)
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif cparen.match(self.code):
+                m_string = cparen.match(self.code).group()
+                value = Value("cparen", m_string)
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif bool.match(self.code):
+                m_string = bool.match(self.code).group()
+                if m_string == "#t":
+                    value = Value("bool", 1)
+                else:
+                    value = Value("bool", 0)
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif double.match(self.code):
+                # print("Matched double!")
+                m_string = double.match(self.code).group()
+                value = Value("double", float(m_string))
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif integer.match(self.code):
+                m_string = integer.match(self.code).group()
+                if m_string[-1] == ".":
+                    value = Value("integer", int(m_string[:-1]))
+                else:
+                    value = Value("integer", int(m_string))
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif symbol.match(self.code):
+                m_string = symbol.match(self.code).group()
+                value = Value("symbol", m_string)
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif string.match(self.code):
+                m_string = string.match(self.code).group()
+                value = Value("string", m_string)
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif comment.match(self.code):
+                m_string = comment.match(self.code).group()
+                value = Value("comment", m_string)
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            else:
+                print("Tokenization error after {}".format(m_string))
+                break
+                # exit and error.
+            self.code = self.code.lstrip()
+
+        return tokens
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('f', type=str)
+    vars = parser.parse_args()
+    contents = []
+    with open(vars.f, "r") as f:
+        contents = f.read()
+
+    if contents:
+        tokenizer = Tokenizer(contents)
+        tokens = tokenizer.tokenize()
+        for token in tokens:
+            print (str(token.data) + ":" + token.type)

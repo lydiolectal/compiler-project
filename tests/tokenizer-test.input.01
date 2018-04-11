@@ -1,0 +1,5 @@
+(define y 808) y
+(quote (23\n4 35 66 5.))
+(quote ())
+"this is a string"
+5.5555578

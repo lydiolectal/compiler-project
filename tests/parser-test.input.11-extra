@@ -1,0 +1,3 @@
+(define yx (quote a))
+(define y x)
+(car y)

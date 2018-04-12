@@ -1,0 +1,1 @@
+(define make-binary-tree (lambda (element left right) (list element left right))) (define entry (lambda (T) (car T)))

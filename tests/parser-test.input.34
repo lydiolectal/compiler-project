@@ -1,0 +1,92 @@
+;;; Problem Set 3
+;;; Caleb Braun
+;;; 9/21/16
+
+
+;; ====== QUESTION 1 ======
+
+;; Return an empty tree
+(define null-binary-tree
+  (lambda () ()))
+(define null-bst null-binary-tree)
+
+;; Return a new tree whose root node is element, left subtree is left, and right subtree is right
+(define make-binary-tree
+  (lambda (element left right)
+    (list element left right)))
+
+;; Return the root node
+(define entry
+  (lambda (T)
+    (car T)))
+
+;; Return the left subtree of T
+(define left
+  (lambda (T)
+    (cadr T)))
+
+;; Return the right subtree of T
+(define right
+  (lambda (T)
+    (caddr T)))
+
+
+;; ====== QUESTION 2 ======
+
+;; Returns #t if L is a valid binary tree and #f otherwise
+(define binary-tree?
+  (lambda (L)
+    (cond
+      ((equal? L (null-binary-tree)) #t)  ; Test for empty list (valid tree)
+      ((pair? L) (and (not (pair? (entry L))) (binary-tree? (left L)) (binary-tree? (right L))))
+      (else #f))))
+                
+
+;; Returns #t if L represents a valid BST, and #f otherwise.
+(define bst?
+  (lambda (L)
+    (define sorted?
+      (lambda (L2)
+        (if (= (length L2) 1)
+            #t
+            (and (< (car L2) (cadr L2)) (sorted? (cdr L2))))))
+    (and (binary-tree? L) (sorted? (inorder-traverse L)))))
+          
+
+;; Return #t if T is an empty BST, and #f otherwise (including invalid input)
+(define null-bst?
+  (lambda (T)
+    (if (equal? T (null-bst))
+        #t
+        #f)))
+
+
+;; ====== QUESTION 3 ======
+
+;; Return #t if bst contains a node with value v, and #f if not
+(define member?
+  (lambda (v bst)
+    (cond
+      ((equal? bst (null-binary-tree)) #f)
+      ((eqv? (entry bst) v) #t)
+      ((> (entry bst) v) (member? v (left bst)))
+      ((< (entry bst) v) (member? v (right bst))))))
+
+;; Return a new binary search tree identical to bst but with integer v appearing in its proper location.
+(define insert
+  (lambda (v bst)
+    (cond
+      ((equal? bst (null-binary-tree)) (list v () ()))
+      ((eqv? (entry bst) v) bst)
+      ((> (entry bst) v) (list (entry bst) (insert v (left bst)) (right bst)))
+      ((< (entry bst) v) (list (entry bst) (left bst) (insert v (right bst)))))))
+
+;; Return a list of all values in T in the order obtained from an inorder traversal
+(define inorder-traverse
+  (lambda (T)
+      (if (equal? T (null-binary-tree))
+          ()
+          (append (inorder-traverse (left T)) (list (entry T)) (inorder-traverse (right T))))))
+
+
+

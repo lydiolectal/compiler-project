@@ -1,0 +1,13 @@
++abcd:symbol
++.a:symbol
++..:symbol
+-:symbol
+1:integer
+(:open
+++.7.2.:symbol
+-0.720000:float
+):close
+123:integer
+1.230000:float
+"string1":string
+"They call me \"Caleb\"":string

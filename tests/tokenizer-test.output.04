@@ -1,0 +1,5 @@
+(:open
+"cat":string
+y:symbol
+.:symbol
+):close

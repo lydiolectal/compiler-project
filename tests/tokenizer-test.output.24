@@ -1,0 +1,11 @@
+(:open
++666.66.6:symbol
+):close
+(:open
+#t:boolean
+"#f":string
+):close
+flowers:symbol
+(:open
+-0.307000:float
+):close

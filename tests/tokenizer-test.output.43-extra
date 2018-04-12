@@ -1,0 +1,5 @@
+1:boolean
+"aaaaaa":string
+'aaaaa:string
+':string
+hello:symbol

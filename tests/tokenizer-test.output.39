@@ -1,0 +1,8 @@
++t:symbol
+(:open
+test1:symbol
+test-really-long-string:symbol
+):close
+(:open
+another-symbol:symbol
+):close

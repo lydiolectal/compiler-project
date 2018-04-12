@@ -1,0 +1,5 @@
+"hello \"friend\"":string
+"hello\n world":string
+"hello\t world":string
+"hello \n world":string
+"hello \' 'world' \ ":string

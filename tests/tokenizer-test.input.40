@@ -1,0 +1,16 @@
+;; All of these should be symbols, integers, floats, and strings
+
++abcd
++.a
++..
+
+-
+
++1
+(++.7.2. -.72)
+
+123
+1.23
+
+"string1"
+"They call me \"Caleb\""

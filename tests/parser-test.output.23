@@ -1,0 +1,2 @@
+(define (nth LL n) (if (= n 0) (car LL) (nth ((cdr LL)) (- n 1))))
+

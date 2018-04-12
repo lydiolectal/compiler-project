@@ -1,0 +1,11 @@
+;; A program that performs addition or subtraction
+
+(define calculate
+  (lambda (f x y)
+    (if (or (eq? f +) (eq? f -))
+        (f x y)
+        "INVALID-FUNCTION")))
+
+(calculate - 10 5)
+(calculate + 2 4)
+(calculate * 3 6)

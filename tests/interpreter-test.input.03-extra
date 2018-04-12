@@ -1,0 +1,18 @@
+;; testing list primitives
+
+(null? ())
+(null? 1)
+
+
+(car (cons 6 (cons 9 ())))
+(cdr (cons 8 ()))
+
+;(car (1 2))
+
+(quote (7 * 1 2))
+
+(- -.2 -2)
+
+(* 2 (/ 4 -2.0))
+
+(equal? (quote(1 2 1)) (quote(1 2)) )

@@ -1,0 +1,6 @@
+(+24.5 ((((()))      'wrongparens ;; now it’s a comment!
+-30
+;
+"this string only terminated after a while of rambling"
+
+'42222

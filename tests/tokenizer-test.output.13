@@ -1,0 +1,24 @@
+(:open
+abc:symbol
+efg:symbol
+1:integer
+345:integer
+):close
+[:open
+x5:symbol
+3.2:float
+]:close
+(:open
+3.2:float
+-3.2:float
+[:open
+3.2:float
+0:integer
+):close
+0:integer
+0:float
+0.001:float
+]:close
+(:open
+"Test String":string
+):close

@@ -1,0 +1,1 @@
+(( )( )( + x2 ( + 4 ( quote x ) 'quote "foo;; still a string" ) 4 5 ( define ( lambda function ( 213 ) ) ) )x5

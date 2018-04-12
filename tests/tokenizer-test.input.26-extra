@@ -1,0 +1,3 @@
+ ; comment
+(define **symbol-lookup** (null))
+#f #t 7890 6.123

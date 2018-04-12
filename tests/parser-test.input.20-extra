@@ -1,0 +1,9 @@
+(define make-binary-tree
+  (lambda (element left right)
+    (list element left right)))
+
+;;(make-binary-tree 5 '(1 () (2 () ())) '())
+
+(define entry
+  (lambda (T)
+    (car T)))

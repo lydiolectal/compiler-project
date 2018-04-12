@@ -1,0 +1,15 @@
+;; testing and and or
+
+(and 0 1)
+(and #t #t)
+
+(or #t #f)
+(or #f 0)
+
+(if #f 5)
+(if #t 6)
+
+(if #f "first" "second")
+
+;returns eval error
+;(if #f "first" "second" "third")

@@ -1,0 +1,14 @@
+(:open
+24.500000:float
+(:open
+(:open
+(:open
+(:open
+(:open
+):close
+):close
+):close
+'wrongparens:string
+-30:integer
+"this string only terminated after a while of rambling":string
+'42222:string

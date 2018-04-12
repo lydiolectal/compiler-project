@@ -1,0 +1,7 @@
++\".37:symbol
+(:open
+"quote with \"escaped\" chars;":string
+342.100000:float
+):close
+):close
+):close

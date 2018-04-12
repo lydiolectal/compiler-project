@@ -1,0 +1,1 @@
+(define sort (lambda (p x )(define mergesort (lambda (L )(if (NULL? L )(quote NULL)(p (car L )1 ))))(mergesort x )))(sort + (quote (5 )))(sort + (quote NULL))(sort - (quote (5 1 3 )))(append (quote (1 2 3 ))(quote (4 5 6 )))

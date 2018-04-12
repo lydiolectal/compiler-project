@@ -1,0 +1,40 @@
+(define nth
+  (lambda (n lst)
+    (if (eq? n 0)
+       (car lst)
+       (nth (- n 1) (cdr lst)))))
+
+(define without-nth
+  (lambda (n lst)
+    (if (eq? n 0)
+      (cdr lst)
+      (cons (car lst) (without-nth (- n 1) (cdr lst))))))
+
+(define shuffle-helper
+  (lambda (newlst lst)
+    (if (equal? (quote ()) lst)
+      newlst
+      (let ((i (random (length lst))))
+        (shuffle-helper
+         (cons (nth i lst) newlst)
+         (without-nth i lst))))))
+
+(define shuffle
+  (lambda (lst)
+    (shuffle-helper (quote ()) lst)))
+
+(define sorted?
+  (lambda (op lst)
+    (cond
+      [(equal? (quote ()) lst) true]
+      [(equal? (quote ()) (cdr lst)) true]
+      [(op (car lst) (car (cdr lst)))
+       (sorted? op (cdr lst))]
+      [else false])))
+
+(define bogosort
+  (lambda (op lst)
+    (let ((newlst (shuffle lst)))
+      (if (sorted? op newlst)
+          newlst
+          (bogosort op newlst)))))

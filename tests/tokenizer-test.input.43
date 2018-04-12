@@ -1,0 +1,9 @@
+;this will break
+#t   
+;; comment
+"aaaaaa"
+'aaaaa
+'
+;; don't see this
+;; or this
+hello

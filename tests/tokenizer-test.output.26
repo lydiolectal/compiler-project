@@ -1,0 +1,11 @@
+(:open
+define:symbol
+**symbol-lookup**:symbol
+(:open
+null:symbol
+):close
+):close
+0:boolean
+1:boolean
+7890:integer
+6.123000:float

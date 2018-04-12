@@ -1,0 +1,10 @@
+
+(:open
+1:integer
++:symbol
+3:integer
++:symbol
+#t:bool
+"false"":string
+|su p|:symbol
+):close

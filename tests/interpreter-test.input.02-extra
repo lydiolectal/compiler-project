@@ -1,0 +1,34 @@
+;; testing let*
+
+(let* ((x 3)
+    (y (+ x 1)))
+y)
+
+(define addThree
+    (lambda (x)
+    (+ x 3)
+))
+
+(addThree 5)
+
+
+
+(+ (if #t 7 6) 5)
+
+(+ (+ 1 2) 3)
+
+;;this doesn't work yet
+((lambda (x)
+    (+ x 3)) 7)
+    
+((if #t addThree addThree) 7)
+
+((if #t + cons) 7 6)
+
+
+
+;; start of line/exp with double parens
+;; print the parse tree - might be in pareser
+;; find out where the eval error is coming from 
+
+

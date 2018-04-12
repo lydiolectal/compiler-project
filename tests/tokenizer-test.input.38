@@ -1,0 +1,12 @@
+;; A program that could be difficult to tokenize
+
+(let ((++.7.2. -.72)
+      (--.7.2 -))
+      (--.7.2 +7.2 ++.7.2.))
+
+
+    (if #t "; #t" ; #t
+        "#f;" ; #f
+        )
+(if #f (quote x)
+    (  quote x)   )

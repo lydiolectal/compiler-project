@@ -1,0 +1,5 @@
+(define sumlist
+  (lambda (x)
+    (if (or (equal? x (quote ())) (or (equal? (car x) (quote ())) (equal? x 0)))
+        0
+        (+ (car x) (sumlist(cdr x))))))

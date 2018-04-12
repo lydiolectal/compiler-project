@@ -1,0 +1,129 @@
+(define lazy-range
+  (lambda (a b)
+    (if (> a b)
+        ()
+        (cons a
+              (lambda () (lazy-range (+ a 1) b))))))
+
+
+;;Creates a lazy infinite range of numbers, starting at a
+(define lazy-infinite-range
+  (lambda (a)
+    (cons a
+          (lambda () (lazy-infinite-range (+ a 1))))))
+
+;;Prints the first n elements of a lazy list
+(define first-n
+  (lambda (LL n)
+    (if (or (null? LL) (= 0 n))
+        ()
+        (cons (car LL) (first-n ((cdr LL)) (- n 1))))))
+
+;;Prints the nth element of a lazy list
+(define nth
+  (lambda (LL n)
+    (cond
+      ((null? LL) #f)
+      ((= 1 n) (car LL))
+      (else (nth ((cdr LL)) (- n 1))))))
+
+;;Return a lazy list of all the elements x such that (f x)
+(define filter-lazy-list
+  (lambda (f LL)
+    (cond
+      ((null? LL) ())
+      ((f (car LL)) (cons (car LL)
+                          (lambda () (filter-lazy-list f ((cdr LL))))))
+      ((not (f (car LL))) (filter-lazy-list f ((cdr LL)))))))
+
+ ;;Return a procedure by which to determine divisibility by k
+(define not-divisible?
+  (lambda (k)
+    (lambda (x)
+      (if (= k 0)
+        #f
+        (not (= (modulo x k) 0))))))
+
+;;Return a lazy list, with a (cdr) whose elements are not divisible by its car
+(define sieve-helper
+  (lambda (LL)
+    (cond
+      ((null? LL) ())
+      ((cons (car LL)
+             (lambda ()
+               (filter-lazy-list (not-divisible? (car LL)) ((cdr LL)))))))))
+
+
+;;Return a lazy list of every prime number
+(define sieve
+  (lambda ()
+    (define in-sieve ;Takes a list as an argument
+      (lambda (LL)
+        ;;Create a lazy list whose first element is the car of LL
+        ;;and whose (cdr) contains only elements which are not divisible by
+        ;;preceding element
+        (cons (car LL) 
+              (lambda ()(in-sieve ((cdr (sieve-helper LL))))))))
+    (in-sieve (lazy-infinite-range 2))))
+        
+    
+   
+
+
+
+;;testing block
+
+"Show (2.procedure)"
+
+(lazy-infinite-range 2)
+
+"Show (2 3 4 5 6 7 8 9 10 11)"
+
+(first-n (lazy-infinite-range 2) 10)
+
+"Show numbers -19 thru 0"
+
+(first-n (lazy-infinite-range -19) 20)
+
+"Show 11"
+
+(nth (lazy-infinite-range 2) 10)
+
+"Show #f"
+
+(nth (lazy-range 2 8) 10)
+
+"Show 2 thru 8"
+
+(first-n (lazy-range 2 8) 10)
+
+"Show 10"
+
+(nth (lazy-range 3 10) 8)
+
+"Show 2.procedure"
+
+(sieve-helper (lazy-infinite-range 2))
+
+"Show list containing 2, odds 3-83"
+
+(first-n (sieve-helper (lazy-infinite-range 2)) 12)
+
+(not-divisible? 2)
+
+"Show #t, #f, #f"
+
+((not-divisible? 2) 3)
+((not-divisible? 2) 4)
+((not-divisible? 3) 6)
+
+"Show evens 2-20"
+(first-n (filter-lazy-list
+          (lambda (x) (= (modulo x 2) 0)) (lazy-infinite-range 1)) 10)
+
+"Show 2.procedure"
+(sieve)
+
+"Show first 23 primes"
+
+(first-n (sieve) 23)

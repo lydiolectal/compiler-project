@@ -1,0 +1,15 @@
+(:open
+*:symbol
+(:open
++:symbol
+6:integer
+9:integer
+):close
+(:open
+12:integer
+):close
+):close
+(:open
+"stringgggg":string
+420x:symbol
+):close

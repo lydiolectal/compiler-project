@@ -22,13 +22,24 @@ class Tokenizer:
         integer = re.compile("\A(\+|-)?\d+\.?")
         double = re.compile("\A(\+|-)?\d*\.\d+")
         # quote = re.compile("\A(quote|\')")
-        symbol = re.compile("\A[A-z]+")
+
+        # <symbol>	    -->	 <initial> <subsequent>*
+        # <initial>	    -->	 <letter> | ! | $ | % | & | * | / | : | < | = | > | ? | ~ | _ | ^
+        #                |<Unicode Lu, Ll, Lt, Lm, Lo, Mn, Nl, No, Pd, Pc, Po, Sc, Sm, Sk, So, or Co>
+        #                |	\x <hex scalar value> ;
+        # <subsequent>	-->	<initial> | <digit 10> | . | + | - | @ | <Unicode Nd, Mc, or Me>
+        # <letter>	    -->	a | b | ... | z | A | B | ... | Z
+        # use these minus the weird hex stuff and Unicode. !$%&*/:<=>?~_^
+
+        initial = "[A-Za-z!$%&*\/:<=>?~_^]"
+        symbol = re.compile("\A" + initial + "(" + initial + "|[0-9.+-@])*")
         string = re.compile("\A\".*\"")
         comment = re.compile("\A;.*(\n|$)")
 
         index = 0
         tokens = []
         while self.code:
+
             if oparen.match(self.code):
                 # matched string
                 m_string = oparen.match(self.code).group()
@@ -81,11 +92,13 @@ class Tokenizer:
 
             elif comment.match(self.code):
                 m_string = comment.match(self.code).group()
-                value = Value("comment", m_string)
+                # ignore comments
+                # value = Value("comment", m_string)
                 self.code = self.code[len(m_string):]
-                tokens.append(value)
+                # tokens.append(value)
 
             else:
+                # errors if it finds an illegal character in first pass.
                 print("Tokenization error after {}".format(m_string))
                 break
                 # exit and error.

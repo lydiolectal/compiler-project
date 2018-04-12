@@ -22,6 +22,9 @@ class Tokenizer:
         integer = re.compile("\A(\+|-)?\d+\.?")
         double = re.compile("\A(\+|-)?\d*\.\d+")
         # quote = re.compile("\A(quote|\')")
+        # bc syntactic sugar.
+        # ' followed by a sequence of non-whitespace, OR ( <stuff> )
+        quote_sugar = re.compile("\A\'(\S+|\(.*)")
 
         # <symbol>	    -->	 <initial> <subsequent>*
         # <initial>	    -->	 <letter> | ! | $ | % | & | * | / | : | < | = | > | ? | ~ | _ | ^
@@ -75,6 +78,12 @@ class Tokenizer:
                     value = Value("integer", int(m_string[:-1]))
                 else:
                     value = Value("integer", int(m_string))
+                self.code = self.code[len(m_string):]
+                tokens.append(value)
+
+            elif quote_sugar.match(self.code):
+                m_string = quote_sugar.match(self.code).group()
+                value = Value("quote", m_string)
                 self.code = self.code[len(m_string):]
                 tokens.append(value)
 
